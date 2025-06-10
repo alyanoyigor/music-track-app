@@ -1,5 +1,5 @@
-import { useMutationState } from "@tanstack/react-query";
-import { CreateTrackDto, UpdateTrackDto, Track } from "@/types";
+import { useMutationState } from '@tanstack/react-query';
+import { CreateTrackDto, UpdateTrackDto, Track } from '@/types';
 
 export function useOptimisticTracks(initialTracks: Track[]) {
   const [optimisticNewTrack] = useMutationState({
@@ -22,7 +22,7 @@ export function useOptimisticTracks(initialTracks: Track[]) {
     tracks = [
       {
         ...optimisticNewTrack,
-        id: 'optimistic-' + Math.random(),
+        id: 'optimistic-' + Date.now(),
         slug: optimisticNewTrack.title.toLowerCase().replace(/\s+/g, '-'),
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
@@ -45,7 +45,9 @@ export function useOptimisticTracks(initialTracks: Track[]) {
   }
 
   if (optimisticDeletedTrack) {
-    tracks = initialTracks.filter((track) => track.id !== optimisticDeletedTrack.id);
+    tracks = initialTracks.filter(
+      (track) => track.id !== optimisticDeletedTrack.id
+    );
   }
 
   return tracks;
